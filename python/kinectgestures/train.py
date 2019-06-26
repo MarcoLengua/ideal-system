@@ -83,6 +83,7 @@ def train(config):
 
     #####################
     ## Go!
+    #print("shape of train dataste augm:", dataset_train_augmented.shape)
     history = model.fit_generator(generator=dataset_train_augmented,
                                   validation_data=dataset_validation_prepared,
                                   callbacks=[checkpoint_saver],
@@ -114,8 +115,8 @@ def run_experiment(config):
     model, hist = train(config)
     history_dict = hist.history
     plot_history(config, history_dict)
-   # save_history(config, history_dict)
-    #save_config(config)
+    save_history(config, history_dict)
+    save_config(config)
 
     # test data and write results
     test(model, config, store_output=True, evaluate_splits=True)

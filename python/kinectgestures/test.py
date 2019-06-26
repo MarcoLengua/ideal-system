@@ -51,7 +51,7 @@ def save_metrics_to_checkpoint(config, metrics):
 
 def test_subset(config, model, should_store_output, filter_category=None, filter_count=None):
     out_path = make_output_dir(config) if should_store_output else get_output_dir(config)
-    is_2d_model = config['model'] in ("cnn2d", "vgg16")
+    is_2d_model = config['model'] in ("cnn2d", "vgg16", "vgg19", "inception")
     dataset_test = GestureDataset(config["dataset_path"],
                                   which_split='test',
                                   batch_size=config["batch_size"],
