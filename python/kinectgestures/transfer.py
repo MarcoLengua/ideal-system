@@ -149,7 +149,7 @@ def create_model_inception(out_shape, config, in_shape=(120, 160, 1)):
     # pre-trained inception feature extraction
     weights = 'imagenet' if config["pretrained"] else None
     base_model = InceptionResNetV2(weights=weights, include_top=False, input_shape=(120,160,3))
-    plot_model(base_model, to_file='model_inception.png', show_shapes=True, show_layer_names=True)
+    #plot_model(base_model, to_file='model_inception.png', show_shapes=True, show_layer_names=True)
     # , input_tensor=input_normalized)
     # x = base_model.output
     features = Model(inputs=input_layer, outputs=base_model(input_normalized))
