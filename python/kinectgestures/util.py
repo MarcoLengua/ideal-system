@@ -21,7 +21,7 @@ def make_output_dir(config):
 
 
 def get_output_dir(config):
-    out_path = os.path.join(config["checkpoint_path"], "out")
+    out_path = os.path.join(get_checkpoint_dir(config), "out")
     return out_path
 
 
@@ -61,12 +61,25 @@ def ask_yes_no_question(question, default="yes"):
 
 
 def checkpoint_dir_exists(config):
-    return os.path.exists(config["checkpoint_path"])
+    dirname = os.path.dirname(__file__)
+    checkpoint_dir = os.path.abspath(os.path.join(dirname, config["checkpoint_path"]))
+    return os.path.exists(checkpoint_dir)
 
+def dataset_dir_exists(config):
+    dirname = os.path.dirname(__file__)
+    dataset_dir = os.path.abspath(os.path.join(dirname, config["dataset_path"]))
+    return os.path.exists(dataset_dir)
 
 def make_or_get_checkpoint_dir(config):
-    os.makedirs(config["checkpoint_path"], exist_ok=True)
-    return config["checkpoint_path"]
+    dirname = os.path.dirname(__file__)
+    checkpoint_dir = os.path.abspath(os.path.join(dirname, config["checkpoint_path"]))
+    os.makedirs(checkpoint_dir, exist_ok=True)
+    return checkpoint_dir
+
+def get_dataset_dir(config):
+    dirname = os.path.dirname(__file__)
+    dataset_dir = os.path.abspath(os.path.join(dirname, config["dataset_path"]))
+    return dataset_dir
 
 
 def get_checkpoint_dir(config):

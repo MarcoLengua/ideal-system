@@ -11,7 +11,7 @@ from kinectgestures.test import test
 from kinectgestures.transfer import create_model_vgg, create_model_vgg19, create_model_inception
 from kinectgestures.util import save_history, save_config, get_checkpoint_filepath
 from kinectgestures.visuals import plot_history
-from kinectgestures.util import checkpoint_dir_exists, make_or_get_checkpoint_dir, ask_yes_no_question
+from kinectgestures.util import checkpoint_dir_exists, dataset_dir_exists, make_or_get_checkpoint_dir, get_dataset_dir, ask_yes_no_question
 from kinectgestures.metrics import motion_metric
 import kinectgestures.metrics as metrics
 
@@ -33,11 +33,12 @@ def train(config):
     #####################
     ## Dataset
     is_2d_model = config['model'] in ("cnn2d", "vgg16", "vgg19", "inception")
-    dataset_train = GestureDataset(config["dataset_path"],
+
+    dataset_train = GestureDataset(get_dataset_dir(config),
                                    which_split='train',
                                    last_frame_only=is_2d_model,
                                    batch_size=config["batch_size"])
-    dataset_validation = GestureDataset(config["dataset_path"],
+    dataset_validation = GestureDataset(get_dataset_dir(config),
                                         which_split='validation',
                                         last_frame_only=is_2d_model,
                                         batch_size=config["batch_size"])
@@ -96,11 +97,11 @@ def train(config):
 
 def run_experiment(config):
 
-    if not os.path.exists(config["dataset_path"]):
+    if not dataset_dir_exists(config):
         raise FileNotFoundError("Dataset not found at {}".format(config["dataset_path"]))
 
     if checkpoint_dir_exists(config):
-        should_overwrite = ask_yes_no_question("[PROMPT] Overwrite existing checkpoint? {}".format(config['checkpoint_path']))
+        should_overwrite = ask_yes_no_question("[PROMPT] Overwrite existing checkpoint? {}".format(config["checkpoint_path"]))
         if should_overwrite:
             make_or_get_checkpoint_dir(config)
         else:

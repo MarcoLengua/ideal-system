@@ -7,7 +7,7 @@ import numpy as np
 
 from kinectgestures.data import GestureDataset
 from kinectgestures.preprocessing import default_evaluation_preprocessing
-from kinectgestures.util import make_output_dir, save_singlechannel, get_output_dir
+from kinectgestures.util import make_output_dir, save_singlechannel, get_output_dir, get_checkpoint_dir, get_dataset_dir
 
 
 def test(model, config, store_output=False, evaluate_splits=False):
@@ -43,7 +43,7 @@ def test(model, config, store_output=False, evaluate_splits=False):
 
 def save_metrics_to_checkpoint(config, metrics):
     pprint(metrics)
-    json_path = os.path.join(config["checkpoint_path"], "metrics_test.json")
+    json_path = os.path.join(get_checkpoint_dir(config), "metrics_test.json")
     with open(json_path, "w") as fp:
         json.dump(metrics, fp, indent=4)
         print("Written to {}".format(json_path))
@@ -52,7 +52,7 @@ def save_metrics_to_checkpoint(config, metrics):
 def test_subset(config, model, should_store_output, filter_category=None, filter_count=None):
     out_path = make_output_dir(config) if should_store_output else get_output_dir(config)
     is_2d_model = config['model'] in ("cnn2d", "vgg16", "vgg19", "inception")
-    dataset_test = GestureDataset(config["dataset_path"],
+    dataset_test = GestureDataset(get_dataset_dir(config),
                                   which_split='test',
                                   batch_size=config["batch_size"],
                                   last_frame_only=is_2d_model,
