@@ -2,7 +2,7 @@ import os
 
 import numpy as np
 import keras
-from keras.callbacks import ModelCheckpoin
+from keras.callbacks import ModelCheckpoint
 
 from kinectgestures.preprocessing import default_evaluation_preprocessing, default_training_preprocessing
 from kinectgestures.data import GestureDataset
