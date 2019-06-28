@@ -1,6 +1,8 @@
 import os
 
 from kinectgestures.util import get_checkpoint_dir
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
