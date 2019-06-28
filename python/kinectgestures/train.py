@@ -1,7 +1,8 @@
 import os
 
 import numpy as np
-from keras.callbacks import ModelCheckpoint
+import keras
+from keras.callbacks import ModelCheckpoin
 
 from kinectgestures.preprocessing import default_evaluation_preprocessing, default_training_preprocessing
 from kinectgestures.data import GestureDataset
@@ -111,16 +112,29 @@ def run_experiment(config):
     print("===================================")
     print("Starting experiment for model {}".format(config["model"]))
     print("===================================")
+    #set up to run on wtmgws
+    if keras.backend == "tensorflow":
+        import tensorflow as tf
 
-    # store visuals and files
-    model, hist = train(config)
-    history_dict = hist.history
-    plot_history(config, history_dict)
-    save_history(config, history_dict)
-    save_config(config)
+        config = tf.ConfigProto()
+        config.gpu_options.allow_growth = True
 
-    # test data and write results
-    test(model, config, store_output=True, evaluate_splits=True)
+        sess = tf.Session(config=config)
+        # from keras import backend as K
+        keras.set_session(sess)
+
+        with tf.device('/gpu:1'):
+            # store visuals and files
+            model, hist = train(config)
+            history_dict = hist.history
+            plot_history(config, history_dict)
+            save_history(config, history_dict)
+            save_config(config)
+
+            # test data and write results
+            test(model, config, store_output=True, evaluate_splits=True)
+
+
 
 
 def main():
