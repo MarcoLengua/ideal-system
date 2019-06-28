@@ -123,7 +123,7 @@ def run_experiment(config):
     # store visuals and files
     model, hist = train(config)
     history_dict = hist.history
-    #plot_history(config, history_dict)
+    plot_history(config, history_dict)
     save_history(config, history_dict)
     save_config(config)
 
