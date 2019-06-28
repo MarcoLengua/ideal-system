@@ -111,7 +111,7 @@ def run_experiment(config):
         from keras import backend as K
         K.set_session(sess)
 
-        with tf.device('/cpu:1'):
+        with tf.device('/gpu:1'):
             print("gpu starts")
             if not dataset_dir_exists(config):
                 raise FileNotFoundError("Dataset not found at {}".format(config["dataset_path"]))
