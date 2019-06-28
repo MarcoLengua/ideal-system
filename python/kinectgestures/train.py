@@ -1,6 +1,11 @@
 import os
 
 import numpy as np
+
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID";
+
+# The GPU id to use, usually either "0" or "1";
+os.environ["CUDA_VISIBLE_DEVICES"] = "1";
 import keras
 from keras.callbacks import ModelCheckpoint
 
@@ -95,49 +100,39 @@ def train(config):
                                   verbose=2  # 0 = silent, 1 = progress bar, 2 = one line per epoch.
                                   )
 
-
     return model, history
 
 
 def run_experiment(config):
-    # set up to run on wtmgws
+    print("gpu starts")
+    if not dataset_dir_exists(config):
+        raise FileNotFoundError("Dataset not found at {}".format(config["dataset_path"]))
 
-        import tensorflow as tf
+    if checkpoint_dir_exios.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID";
 
-        conf = tf.ConfigProto()
-        conf.gpu_options.allow_growth = True
+# The GPU id to use, usually either "0" or "1";
+os.environ["CUDA_VISIBLE_DEVICES"]="0";sts(config):
+        should_overwrite = ask_yes_no_question(
+            "[PROMPT] Overwrite existing checkpoint? {}".format(config["checkpoint_path"]))
+        if should_overwrite:
+            make_or_get_checkpoint_dir(config)
+        else:
+            print("Skipping experiment...")
+            return
 
-        sess = tf.Session(config=conf)
-        from keras import backend as K
-        K.set_session(sess)
+    print("===================================")
+    print("Starting experiment for model {}".format(config["model"]))
+    print("===================================")
 
-        with tf.device('/gpu:1'):
-            print("gpu starts")
-            if not dataset_dir_exists(config):
-                raise FileNotFoundError("Dataset not found at {}".format(config["dataset_path"]))
+    # store visuals and files
+    model, hist = train(config)
+    history_dict = hist.history
+    plot_history(config, history_dict)
+    save_history(config, history_dict)
+    save_config(config)
 
-            if checkpoint_dir_exists(config):
-                should_overwrite = ask_yes_no_question(
-                    "[PROMPT] Overwrite existing checkpoint? {}".format(config["checkpoint_path"]))
-                if should_overwrite:
-                    make_or_get_checkpoint_dir(config)
-                else:
-                    print("Skipping experiment...")
-                    return
-
-            print("===================================")
-            print("Starting experiment for model {}".format(config["model"]))
-            print("===================================")
-
-            # store visuals and files
-            model, hist = train(config)
-            history_dict = hist.history
-            plot_history(config, history_dict)
-            save_history(config, history_dict)
-            save_config(config)
-
-            # test data and write results
-            test(model, config, store_output=True, evaluate_splits=True)
+    # test data and write results
+    test(model, config, store_output=True, evaluate_splits=True)
 
 
 def main():
