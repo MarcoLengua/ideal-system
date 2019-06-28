@@ -12,7 +12,8 @@ from kinectgestures.test import test
 from kinectgestures.transfer import create_model_vgg, create_model_vgg19, create_model_inception
 from kinectgestures.util import save_history, save_config, get_checkpoint_filepath
 from kinectgestures.visuals import plot_history
-from kinectgestures.util import checkpoint_dir_exists, dataset_dir_exists, make_or_get_checkpoint_dir, get_dataset_dir, ask_yes_no_question
+from kinectgestures.util import checkpoint_dir_exists, dataset_dir_exists, make_or_get_checkpoint_dir, get_dataset_dir, \
+    ask_yes_no_question
 from kinectgestures.metrics import motion_metric
 import kinectgestures.metrics as metrics
 
@@ -47,8 +48,8 @@ def train(config):
     #####################
     ## Model
     kwargs = dict(out_shape=config["out_shape"],
-                        in_shape=config["in_shape"],
-                        config=config)
+                  in_shape=config["in_shape"],
+                  config=config)
     if config['model'] == "cnn2d":
         model = create_model_2d(**kwargs)
     elif config['model'] == "cnn3d":
@@ -85,7 +86,8 @@ def train(config):
 
     #####################
     ## Go!
-    #print("shape of train dataste augm:", dataset_train_augmented.shape)
+
+    # print("shape of train dataste augm:", dataset_train_augmented.shape)
     history = model.fit_generator(generator=dataset_train_augmented,
                                   validation_data=dataset_validation_prepared,
                                   callbacks=[checkpoint_saver],
@@ -93,37 +95,40 @@ def train(config):
                                   verbose=2  # 0 = silent, 1 = progress bar, 2 = one line per epoch.
                                   )
 
+
     return model, history
 
 
 def run_experiment(config):
+    # set up to run on wtmgws
 
-    if not dataset_dir_exists(config):
-        raise FileNotFoundError("Dataset not found at {}".format(config["dataset_path"]))
-
-    if checkpoint_dir_exists(config):
-        should_overwrite = ask_yes_no_question("[PROMPT] Overwrite existing checkpoint? {}".format(config["checkpoint_path"]))
-        if should_overwrite:
-            make_or_get_checkpoint_dir(config)
-        else:
-            print("Skipping experiment...")
-            return
-
-    print("===================================")
-    print("Starting experiment for model {}".format(config["model"]))
-    print("===================================")
-    #set up to run on wtmgws
-    if keras.backend == "tensorflow":
         import tensorflow as tf
 
-        config = tf.ConfigProto()
-        config.gpu_options.allow_growth = True
+        conf = tf.ConfigProto()
+        conf.gpu_options.allow_growth = True
 
-        sess = tf.Session(config=config)
-        # from keras import backend as K
-        keras.set_session(sess)
+        sess = tf.Session(config=conf)
+        from keras import backend as K
+        K.set_session(sess)
 
-        with tf.device('/gpu:1'):
+        with tf.device('/cpu:1'):
+            print("gpu starts")
+            if not dataset_dir_exists(config):
+                raise FileNotFoundError("Dataset not found at {}".format(config["dataset_path"]))
+
+            if checkpoint_dir_exists(config):
+                should_overwrite = ask_yes_no_question(
+                    "[PROMPT] Overwrite existing checkpoint? {}".format(config["checkpoint_path"]))
+                if should_overwrite:
+                    make_or_get_checkpoint_dir(config)
+                else:
+                    print("Skipping experiment...")
+                    return
+
+            print("===================================")
+            print("Starting experiment for model {}".format(config["model"]))
+            print("===================================")
+
             # store visuals and files
             model, hist = train(config)
             history_dict = hist.history
@@ -135,10 +140,9 @@ def run_experiment(config):
             test(model, config, store_output=True, evaluate_splits=True)
 
 
-
-
 def main():
     pass
+
 
 if __name__ == "__main__":
     main()
