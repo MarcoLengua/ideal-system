@@ -104,14 +104,10 @@ def train(config):
 
 
 def run_experiment(config):
-    print("gpu starts")
     if not dataset_dir_exists(config):
         raise FileNotFoundError("Dataset not found at {}".format(config["dataset_path"]))
 
-    if checkpoint_dir_exios.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID";
-
-# The GPU id to use, usually either "0" or "1";
-os.environ["CUDA_VISIBLE_DEVICES"]="0";sts(config):
+    if checkpoint_dir_exists(config):
         should_overwrite = ask_yes_no_question(
             "[PROMPT] Overwrite existing checkpoint? {}".format(config["checkpoint_path"]))
         if should_overwrite:
