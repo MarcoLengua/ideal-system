@@ -18,8 +18,8 @@
         80
     ],
     "batch_size": 16,
-    "epochs": 25,
-    "checkpoint_path": "../../checkpoints/inception1625800",
+    "epochs": 50,
+    "checkpoint_path": "../../checkpoints/inception1650800",
     "model": "inception",
     "num_features": 800,
     "dropout_rate": 0.5,
