@@ -17,11 +17,11 @@
         60,
         80
     ],
-    "batch_size": 4,
-    "epochs": 50,
-    "checkpoint_path": "../../checkpoints/inception",
+    "batch_size": 8,
+    "epochs": 25,
+    "checkpoint_path": "../../checkpoints/inception825500",
     "model": "inception",
-    "num_features": 384,
+    "num_features": 500,
     "dropout_rate": 0.5,
     "pretrained": true
 }
