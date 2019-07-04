@@ -78,7 +78,7 @@ def train(config):
     #####################
     ## Training setup
     metrics.BATCH_SIZE = config["batch_size"]
-    model.compile(optimizer='adam', loss='mse', metrics=[motion_metric])
+    model.compile(optimizer='sgd', loss='mse', metrics=[motion_metric])
 
     #####################
     # Callbacks
