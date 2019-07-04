@@ -1,5 +1,5 @@
 {
-    "dataset_path": "/datasets/kinect-gestures-v1-240x320",
+    "dataset_path": "../../datasets/kinect-gestures-v1-240x320",
     "out_shape": [
         60,
         80
@@ -19,7 +19,7 @@
     ],
     "batch_size": 4,
     "epochs": 50,
-    "checkpoint_path": "/checkpoints/vgg19",
+    "checkpoint_path": "../../checkpoints/vgg19_450384",
     "model": "vgg19",
     "num_features": 384,
     "dropout_rate": 0.5,
