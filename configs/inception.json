@@ -23,5 +23,5 @@
     "model": "inception",
     "num_features": 384,
     "dropout_rate": 0.5,
-    "pretrained": true
+    "pretrained": false
 }
