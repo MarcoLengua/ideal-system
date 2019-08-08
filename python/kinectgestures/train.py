@@ -102,6 +102,96 @@ def train(config):
 
     return model, history
 
+def trainforhyperopt(config):
+    #####################
+    ## Dataset
+    is_2d_model = config['model'] in ("cnn2d", "vgg16", "vgg19", "inception")
+
+    dataset_train = GestureDataset(get_dataset_dir(config),
+                                   which_split='train',
+                                   last_frame_only=is_2d_model,
+                                   batch_size=config["batch_size"])
+    dataset_validation = GestureDataset(get_dataset_dir(config),
+                                        which_split='validation',
+                                        last_frame_only=is_2d_model,
+                                        batch_size=config["batch_size"])
+
+    #####################
+    ## Model
+    kwargs = dict(out_shape=config["out_shape"],
+                  in_shape=config["in_shape"],
+                  config=config)
+    if config['model'] == "cnn2d":
+        model = create_model_2d(**kwargs)
+    elif config['model'] == "cnn3d":
+        model = create_model_3d(**kwargs)
+    elif config['model'] == "vgg16":
+        model = create_model_vgg(**kwargs)
+    elif config['model'] == "vgg19":
+        model = create_model_vgg19(**kwargs)
+    elif config['model'] == "inception":
+        model = create_model_inception(**kwargs)
+    else:
+        raise ValueError("Unknown model {}".format(config["model"]))
+
+    model.summary()
+
+    #####################
+    ## Data augmentation
+    dataset_train_augmented = default_training_preprocessing(config, dataset_train)
+    dataset_validation_prepared = default_evaluation_preprocessing(config, dataset_validation)
+
+    #####################
+    ## Training setup
+    metrics.BATCH_SIZE = config["batch_size"]
+    model.compile(optimizer=config["optimizer"], loss='mse', metrics=[motion_metric])
+
+    #####################
+    # Callbacks
+    filepath = get_checkpoint_filepath(config, pattern='weights.hdf5')
+    checkpoint_saver = ModelCheckpoint(filepath,
+                                       monitor='val_motion_metric',
+                                       save_best_only=True,  # only overwrite if model is better
+                                       mode='max'  # higher is better for this metric
+                                       )
+
+    #####################
+    ## Go!
+
+    # print("shape of train dataste augm:", dataset_train_augmented.shape)
+    history = model.fit_generator(generator=dataset_train_augmented,
+                                  validation_data=dataset_validation_prepared,
+                                  callbacks=[checkpoint_saver],
+                                  epochs=config["epochs"],
+                                  verbose=2  # 0 = silent, 1 = progress bar, 2 = one line per epoch.
+                                  )
+
+    print(model.metrics_names)
+    x_evaluate = []
+    y_evaluate = []
+    for i in range(len(dataset_validation_prepared)):
+        batch, teachers = dataset_validation_prepared[i]
+        x_evaluate.append(batch)
+        y_evaluate.append(teachers)
+    print("meine samples für evaluate als liste")
+    print(len(x_evaluate))
+    x_eval = np.asarray(x_evaluate)
+    print(x_eval.shape)
+    x_eval = x_eval.reshape(-1, *x_eval.shape[-3:])
+    print("meine samples als np array")
+    print(x_eval.shape)
+    print("meine teachers für evaluate als liste")
+    print(len(y_evaluate))
+    y_eval = np.asarray(y_evaluate)
+    print(y_eval.shape)
+    y_eval = y_eval.reshape(-1, *y_eval.shape[-2:])
+    print("meine teachers als np array")
+    print(y_eval.shape)
+    loss, motion_score = model.evaluate(x_eval, y_eval, batch_size=config['batch_size'])
+    print("mein score")
+    print(motion_score)
+
+    return model, history, motion_score
 
 def run_experiment(config):
     if not dataset_dir_exists(config):

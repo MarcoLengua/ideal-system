@@ -58,7 +58,7 @@ def create_model_vgg(out_shape, config, in_shape=(120, 160, 1)):
     input_normalized = BatchNormalization()(input_stacked)
 
     # pre-trained VGG16 feature extraction
-    weights = 'imagenet' if config["pretrained"] else None
+    weights = 'imagenet' #if config["pretrained"] else None
     base_model = VGG16(weights=weights, include_top=False)  # , input_tensor=input_normalized)
     # x = base_model.output
     features = Model(inputs=input_layer, outputs=base_model(input_normalized))
