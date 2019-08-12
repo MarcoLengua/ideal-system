@@ -27,6 +27,7 @@ def objective(params):
     }
     model, hist, score = trainforhyperopt(config)
     history_dict = hist.history
+    history_dict['validation_score']=score
     plot_history(config, history_dict)
     save_history(config, history_dict)
     save_config(config)
