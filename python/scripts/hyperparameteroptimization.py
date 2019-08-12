@@ -21,7 +21,7 @@ def objective(params):
     "epochs": params['epochs'],
     "model": "vgg19",
     "dropout_rate": 0.5,
-    "num_features": params['num_features'],
+    "num_features": int(params['num_features']),
     "pretrained": params['pretrained'],
     "optimizer": params['optimizer']
     }
