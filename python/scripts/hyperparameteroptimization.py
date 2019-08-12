@@ -14,7 +14,7 @@ def objective(params):
     "dataset_path": "../../datasets/kinect-gestures-v1-240x320",
     "checkpoint_path": outpath,
     "out_shape": [60, 80],  # exactly half the input size, original: [120, 160]
-    "in_shape": [120, 160],
+    "in_shape": [120, 160,1],
     "preprocessing_scale": [180, 220],
     "preprocessing_scale_teacher": [60, 80],
     "batch_size": params['batch_size'],

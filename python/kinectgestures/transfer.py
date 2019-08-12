@@ -101,7 +101,7 @@ def create_model_vgg19(out_shape, config, in_shape=(120, 160, 1)):
     input_normalized = BatchNormalization()(input_stacked)
 
     # pre-trained VGG16 feature extraction
-    weights = 'imagenet' if config["pretrained"] else None
+    weights = 'imagenet'
     base_model = VGG19(weights=weights, include_top=False)
     plot_model(base_model, to_file='model_vgg19.png', show_shapes=True, show_layer_names=True)
     # , input_tensor=input_normalized)
