@@ -9,7 +9,7 @@ from kinectgestures.visuals import plot_history
 
 def objective(params):
     print('Params testing: ', params)
-    outpath = "../../checkpoints/vgg19/"+str(params['pretrained'])+"opt_"+params['optimizer']+"epochs_"+params['epochs']+"batch_"+params['batch_size']+"bottleneck_"+params['num_features']
+    outpath = "../../checkpoints/vgg19/"+str(params['pretrained'])+"opt_"+params['optimizer']+"epochs_"+str(params['epochs'])+"batch_"+str(params['batch_size'])+"bottleneck_"+str(params['num_features'])
     config = {
     "dataset_path": "../../datasets/kinect-gestures-v1-240x320",
     "checkpoint_path": outpath,
@@ -21,7 +21,7 @@ def objective(params):
     "epochs": params['epochs'],
     "model": "vgg19",
     "dropout_rate": 0.5,
-    "num_features": str(params['num_features']),
+    "num_features": params['num_features'],
     "pretrained": params['pretrained'],
     "optimizer": params['optimizer']
     }
