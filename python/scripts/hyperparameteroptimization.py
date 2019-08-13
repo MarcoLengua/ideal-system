@@ -9,7 +9,7 @@ from kinectgestures.visuals import plot_history
 
 def objective(params):
     print('Params testing: ', params)
-    outpath = "../../checkpoints/vgg19/"+str(params['pretrained'])+"opt_"+params['optimizer']+"epochs_"+str(params['epochs'])+"batch_"+str(params['batch_size'])+"bottleneck_"+str(params['num_features'])
+    outpath = "../../checkpoints/hyperopt_vgg19/"+str(params['pretrained'])+"opt_"+params['optimizer']+"epochs_"+str(params['epochs'])+"batch_"+str(params['batch_size'])+"bottleneck_"+str(params['num_features'])
     config = {
     "dataset_path": "../../datasets/kinect-gestures-v1-240x320",
     "checkpoint_path": outpath,
@@ -55,3 +55,12 @@ totaltime = endtime- starttime
 print("Zeitinsgesamt:")
 print(str(totaltime))
 print(trials.best_trial)
+with open("trial_file.txt", 'w') as f:
+    f.write("Startzeit:")
+    f.write(str(starttime))
+    f.write("Endzeit:")
+    f.write(str(endtime))
+    f.write("Zeitinsgesamt:")
+    f.write(str(totaltime))
+    f.write("Best Trial")
+    f.write(trials.best_trial)
