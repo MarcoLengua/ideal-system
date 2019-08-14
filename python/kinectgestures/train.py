@@ -133,7 +133,7 @@ def trainforhyperopt(config):
     else:
         raise ValueError("Unknown model {}".format(config["model"]))
 
-    #model.summary()
+    model.summary()
 
     #####################
     ## Data augmentation
