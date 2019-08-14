@@ -105,7 +105,7 @@ def trainforhyperopt(config):
     #####################
     ## Dataset
     is_2d_model = config['model'] in ("cnn2d", "vgg16", "vgg19", "inception")
-
+    print(config['batch_size'])
     dataset_train = GestureDataset(get_dataset_dir(config),
                                    which_split='train',
                                    last_frame_only=is_2d_model,
