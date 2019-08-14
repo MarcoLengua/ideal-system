@@ -109,11 +109,11 @@ def trainforhyperopt(config):
     dataset_train = GestureDataset(get_dataset_dir(config),
                                    which_split='train',
                                    last_frame_only=is_2d_model,
-                                   batch_size=config["batch_size"])
+                                   batch_size=config['batch_size'])
     dataset_validation = GestureDataset(get_dataset_dir(config),
                                         which_split='validation',
                                         last_frame_only=is_2d_model,
-                                        batch_size=config["batch_size"])
+                                        batch_size=config['batch_size'])
 
     #####################
     ## Model
