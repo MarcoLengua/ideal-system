@@ -37,7 +37,6 @@ def objective(params):
 
 space = {
     'batch_size': hp.choice('batch_size', [2,4,8,12,16,24,32]),
-    #'epochs': hp.choice('epochs', [10, 20, 30, 40, 50, 60, 70 ,80, 90, 100]),
     'optimizer': hp.choice('optimizer', ['sgd', 'adam', 'rmsprop']),
     'num_features': hp.qloguniform('num_features', 4, 8, 10),
     'pretrained': hp.choice('pretrained', [True, False])
