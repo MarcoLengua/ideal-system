@@ -100,13 +100,13 @@ def create_model_vgg19(out_shape, config, in_shape=(120, 160, 1)):
     # learn a normalization, roughly map distributions Kinect data -> RGB
     input_normalized = BatchNormalization()(input_stacked)
 
-    # pre-trained VGG16 feature extraction
+    # pre-trained VGG19 feature extraction
     weights = 'imagenet'
     base_model = VGG19(weights=weights, include_top=False)
-    plot_model(base_model, to_file='model_vgg19.png', show_shapes=True, show_layer_names=True)
+    #plot_model(base_model, to_file='model_vgg19.png', show_shapes=True, show_layer_names=True)
     # , input_tensor=input_normalized)
     # x = base_model.output
-    base_model.summary()
+    #base_model.summary()
     features = Model(inputs=input_layer, outputs=base_model(input_normalized))
     x = features.output
 
