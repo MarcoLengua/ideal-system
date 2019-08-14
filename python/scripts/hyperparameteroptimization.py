@@ -9,7 +9,7 @@ from kinectgestures.visuals import plot_history
 
 def objective(params):
     print('Params testing: ', params)
-    outpath = "../../checkpoints/hyperopt_vgg19/"+str(params['pretrained'])+"opt_"+params['optimizer']+"batch_"+str(params['batch_size'])+"bottleneck_"+str(params['num_features'])
+    outpath = "../../checkpoints/hyperopt_new/"+str(params['pretrained'])+"opt_"+params['optimizer']+"batch_"+str(params['batch_size'])+"bottleneck_"+str(params['num_features'])
     config = {
     "dataset_path": "../../datasets/kinect-gestures-v1-240x320",
     "checkpoint_path": outpath,
