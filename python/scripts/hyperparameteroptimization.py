@@ -18,7 +18,7 @@ def objective(params):
     "preprocessing_scale": [180, 220],
     "preprocessing_scale_teacher": [60, 80],
     "batch_size": params['batch_size'],
-    "epochs": params['epochs'],
+    "epochs": 10,
     "model": "vgg19",
     "dropout_rate": 0.5,
     "num_features": int(params['num_features']),
@@ -37,7 +37,7 @@ def objective(params):
 
 space = {
     'batch_size': hp.choice('batch_size', [2,4,8,12,16,24,32]),
-    'epochs': hp.choice('epochs', [10, 20, 30, 40, 50, 60, 70 ,80, 90, 100]),
+    #'epochs': hp.choice('epochs', [10, 20, 30, 40, 50, 60, 70 ,80, 90, 100]),
     'optimizer': hp.choice('optimizer', ['sgd', 'adam', 'rmsprop']),
     'num_features': hp.qloguniform('num_features', 4, 8, 10),
     'pretrained': hp.choice('pretrained', [True, False])
