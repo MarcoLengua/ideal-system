@@ -106,11 +106,12 @@ def create_model_vgg19(out_shape, config, in_shape=(120, 160, 1)):
     #plot_model(base_model, to_file='model_vgg19.png', show_shapes=True, show_layer_names=True)
     # , input_tensor=input_normalized)
     # x = base_model.output
-    #base_model.summary()
+    base_model.summary()
     features = Model(inputs=input_layer, outputs=base_model(input_normalized))
     x = features.output
 
     # add MLP on top
+    print("add mlp")
     x = Flatten()(x)
     x = Dense(config["num_features"])(x)
     x = Dropout(config["dropout_rate"])(x)
@@ -121,10 +122,12 @@ def create_model_vgg19(out_shape, config, in_shape=(120, 160, 1)):
     model = Model(inputs=input_layer, outputs=x)
 
     # freeze VGG19 layers
+    print("freeze layers")
     if config["pretrained"]:
         for layer in base_model.layers:
             layer.trainable = False
 
+    print("return model")
     return model
 
 #################
