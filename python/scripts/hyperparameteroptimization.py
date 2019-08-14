@@ -31,7 +31,7 @@ def objective(params):
     plot_history(config, history_dict)
     save_history(config, history_dict)
     save_config(config)
-    print("Meine score für diese Einstellungen: \n")
+    print("Meine score fuer diese Einstellungen: \n")
     print(score)
     return {'loss': score*(-1), 'status': STATUS_OK}
 
