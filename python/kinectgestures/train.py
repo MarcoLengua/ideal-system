@@ -2,10 +2,15 @@ import os
 
 import numpy as np
 
-os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID";
+#os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID";
 # The GPU id to use, usually either "0" or "1";
-os.environ["CUDA_VISIBLE_DEVICES"] = "1";
+#os.environ["CUDA_VISIBLE_DEVICES"] = "0";
 import keras
+#from keras import backend as K
+#K.tensorflow_backend._get_available_gpus()
+#from tensorflow.python.client import device_lib
+#print(device_lib.list_local_devices())
+
 from keras.callbacks import ModelCheckpoint
 
 from kinectgestures.preprocessing import default_evaluation_preprocessing, default_training_preprocessing
