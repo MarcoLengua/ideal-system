@@ -2,9 +2,9 @@ import os
 
 import numpy as np
 
-#os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID";
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID";
 # The GPU id to use, usually either "0" or "1";
-#os.environ["CUDA_VISIBLE_DEVICES"] = "0";
+os.environ["CUDA_VISIBLE_DEVICES"] = "0";
 import keras
 #from keras import backend as K
 #K.tensorflow_backend._get_available_gpus()
@@ -110,8 +110,6 @@ def trainforhyperopt(config):
     #####################
     ## Dataset
     is_2d_model = config['model'] in ("cnn2d", "vgg16", "vgg19", "inception")
-    print(config['batch_size'])
-    print(get_dataset_dir(config))
     dataset_train = GestureDataset(get_dataset_dir(config),
                                    which_split='train',
                                    last_frame_only=is_2d_model,

@@ -94,18 +94,14 @@ def create_model_vgg19(out_shape, config, in_shape=(120, 160, 1)):
     out_height, out_width = out_shape
 
     # increase channels from 1 -> 3
-    print("create model vgg 19")
     input_layer = Input(in_shape)
-    print("input stacked")
     input_stacked = Lambda(stack_channels, output_shape=output_of_stack_channels)(input_layer)
 
     # learn a normalization, roughly map distributions Kinect data -> RGB
-    print("normalize batch")
     input_normalized = BatchNormalization()(input_stacked)
 
     # pre-trained VGG19 feature extraction
     weights = 'imagenet'
-    print("initialize vgg19 from imagenet")
     base_model = VGG19(weights=weights, include_top=False)
     #plot_model(base_model, to_file='model_vgg19.png', show_shapes=True, show_layer_names=True)
     # , input_tensor=input_normalized)
@@ -115,7 +111,6 @@ def create_model_vgg19(out_shape, config, in_shape=(120, 160, 1)):
     x = features.output
 
     # add MLP on top
-    print("add mlp")
     x = Flatten()(x)
     x = Dense(config["num_features"])(x)
     x = Dropout(config["dropout_rate"])(x)
@@ -126,12 +121,10 @@ def create_model_vgg19(out_shape, config, in_shape=(120, 160, 1)):
     model = Model(inputs=input_layer, outputs=x)
 
     # freeze VGG19 layers
-    print("freeze layers")
     if config["pretrained"]:
         for layer in base_model.layers:
             layer.trainable = False
 
-    print("return model")
     return model
 
 #################
