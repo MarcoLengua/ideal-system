@@ -62,4 +62,4 @@ with open("trial_file.txt", 'w') as f:
     f.write("Zeitinsgesamt:")
     f.write(str(totaltime))
     f.write("Best Trial")
-    f.write(trials.best_trial)
+    f.write(str(trials.best_trial))
