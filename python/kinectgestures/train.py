@@ -41,6 +41,16 @@ def test_dummy_prediction(model):
 
 
 def train(config):
+
+    #######Configs for GPU
+    from keras.backend.tensorflow_backend import set_session
+    import tensorflow as tf
+    configGraphics = tf.ConfigProto()
+    configGraphics.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
+    configGraphics.log_device_placement = True  # to log device placement (on which device the operation ran)
+    sess = tf.Session(config=configGraphics)
+    set_session(sess)  # set this TensorFlow session as the default session for Keras
+
     #####################
     ## Dataset
     is_2d_model = config['model'] in ("cnn2d", "vgg16", "vgg19", "inception")
