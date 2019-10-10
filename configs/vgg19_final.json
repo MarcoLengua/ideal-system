@@ -23,5 +23,6 @@
     "model": "vgg19",
     "num_features": 384,
     "dropout_rate": 0.5,
-    "pretrained": true
+    "pretrained": true,
+    "optimizer": "sgd"
 }
