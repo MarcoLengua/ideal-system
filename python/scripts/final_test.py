@@ -17,7 +17,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     train(args.path)
 
-def run_train_validation_test_final(config)
+def run_train_validation_test_final(config):
 
  # store visuals and files
     print("Startzeit:")
