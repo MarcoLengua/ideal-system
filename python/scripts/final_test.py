@@ -6,20 +6,8 @@ from kinectgestures.visuals import plot_history
 from kinectgestures.util import load_json
 from kinectgestures.test import test
 
-def train(config_path):
-    config = load_json(config_path)
-    run_train_validation_test_final(config)
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser("Run training for a given config file")
-    parser.add_argument("path", help="Path to config json")
-    args = parser.parse_args()
-    train(args.path)
-
 def run_train_validation_test_final(config):
-
- # store visuals and files
+    # store visuals and files
     print("Startzeit:")
     starttime = datetime.datetime.now()
     print(str(starttime))
@@ -39,3 +27,14 @@ def run_train_validation_test_final(config):
     totaltime = endtime- starttime
     print("Zeitinsgesamt:")
     print(str(totaltime))
+
+def train(config_path):
+    config = load_json(config_path)
+    run_train_validation_test_final(config)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser("Run training for a given config file")
+    parser.add_argument("path", help="Path to config json")
+    args = parser.parse_args()
+    train(args.path)
