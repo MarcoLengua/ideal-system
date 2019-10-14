@@ -20,7 +20,7 @@
     ],
     "batch_size": 4,
     "epochs": 100,
-    "checkpoint_path": "../../checkpoints/cnn3d_100epochs_final",
+    "checkpoint_path": "../../checkpoints/cnn3d_100epochs_final_3dreshape",
     "model": "cnn3d",
     "kernel_base": 16,
     "num_features": 384,
