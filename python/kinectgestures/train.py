@@ -272,7 +272,10 @@ def trainfforvalidationandtest(config):
         y_evaluate.append(teachers)
 
     x_eval = np.asarray(x_evaluate)
-    x_eval = x_eval.reshape(-1, *x_eval.shape[-3:])
+    if is_2d_model:
+        x_eval = x_eval.reshape(-1, *x_eval.shape[-3:])
+    else:
+        x_eval = x_eval.reshape(-1, *x_eval.shape[-4:])
     y_eval = np.asarray(y_evaluate)
     y_eval = y_eval.reshape(-1, *y_eval.shape[-2:])
     loss, motion_score = model.evaluate(x_eval, y_eval, batch_size=config['batch_size'])
