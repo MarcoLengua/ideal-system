@@ -17,12 +17,12 @@
         60,
         80
     ],
-    "batch_size": 4,
+    "batch_size": 24,
     "epochs": 100,
     "checkpoint_path": "../../checkpoints/vgg19_epochs100_final",
     "model": "vgg19",
-    "num_features": 384,
+    "num_features": 80,
     "dropout_rate": 0.5,
     "pretrained": true,
-    "optimizer": "sgd"
+    "optimizer": "adam"
 }
