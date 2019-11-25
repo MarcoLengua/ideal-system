@@ -17,12 +17,12 @@
         60,
         80
     ],
-    "batch_size": 8,
+    "batch_size": 12,
     "epochs": 100,
     "checkpoint_path": "../../checkpoints/inception_epochs100_final",
     "model": "inception",
-    "num_features": 384,
+    "num_features": 70,
     "dropout_rate": 0.5,
     "pretrained": false,
-    "optimizer": "sgd"
+    "optimizer": "adam"
 }
