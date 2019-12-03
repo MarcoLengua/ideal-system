@@ -6,7 +6,7 @@ os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID";
 os.environ["CUDA_VISIBLE_DEVICES"] = "1";
 
 from keras.callbacks import ModelCheckpoint
-
+import keras
 from kinectgestures.preprocessing import default_evaluation_preprocessing, default_training_preprocessing
 from kinectgestures.data import GestureDataset
 
