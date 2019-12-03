@@ -241,7 +241,8 @@ def trainfforvalidationandtest(config):
     #####################
     ## Training setup
     metrics.BATCH_SIZE = config["batch_size"]
-    model.compile(optimizer=config["optimizer"], loss='mse', metrics=[motion_metric])
+    adam = keras.optimizers.Adam(learning_rate=0.0001, beta_1=0.9, beta_2=0.999, amsgrad=False)
+    model.compile(optimizer=adam, loss='mse', metrics=[motion_metric])
 
     #####################
     # Callbacks
