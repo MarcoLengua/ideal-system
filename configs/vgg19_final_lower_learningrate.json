@@ -1,0 +1,28 @@
+{
+    "dataset_path": "../../datasets/kinect-gestures-v1-240x320",
+    "out_shape": [
+        60,
+        80
+    ],
+    "in_shape": [
+        120,
+        160,
+        1
+    ],
+    "preprocessing_scale": [
+        144,
+        192
+    ],
+    "preprocessing_scale_teacher": [
+        60,
+        80
+    ],
+    "batch_size": 24,
+    "epochs": 100,
+    "checkpoint_path": "../../checkpoints/vgg19_epochs100_final_lowerlearningrate",
+    "model": "vgg19",
+    "num_features": 80,
+    "dropout_rate": 0.5,
+    "pretrained": true,
+    "optimizer": "adam"
+}
