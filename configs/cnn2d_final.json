@@ -19,7 +19,7 @@
     ],
     "batch_size": 4,
     "epochs": 100,
-    "checkpoint_path": "../../checkpoints/cnn2d_100epochs_testmodel",
+    "checkpoint_path": "../../checkpoints/cnn2d_100epochs_adam",
     "model": "cnn2d",
     "kernel_base": 16,
     "num_features": 384,

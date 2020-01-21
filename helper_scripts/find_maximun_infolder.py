@@ -2,9 +2,11 @@ import os
 import json
 import glob
 
-checkpoint_glob = "/informatik2/students/home/1lengua/hyperopt/hyperopt_2082019_cpu/*"
+#checkpoint_glob = "/informatik2/students/home/1lengua/hyperopt/hyperopt_2082019_cpu/*"
 #checkpoint_glob = "/informatik2/students/home/1lengua/hyperopt_inception/*"
 #checkpoint_glob = "/informatik2/students/home/1lengua/hyperopt_inception_2/*"
+checkpoint_glob = "/home/marco/HyperOptBachelor/inception_net_hyperopt_final/*"
+#checkpoint_glob = "/home/marco/HyperOptBachelor/vgg19_net_hyperopt_final/*"
 
 checkpoints = glob.glob(checkpoint_glob)
 results = []
