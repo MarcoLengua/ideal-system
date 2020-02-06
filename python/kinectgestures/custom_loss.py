@@ -49,31 +49,9 @@ def motion_metric_single_element_no_motion_in_teacher(y_true, y_pred, threshold)
                    lambda: 0.0)
 
 
-def motion_metric_single_element(y_true, y_pred, threshold):
+def motion_loss(y_true, y_pred, threshold=-0.3):
     motion_in_teacher = contains_motion(y_true, threshold)
 
     return tf.cond(motion_in_teacher,
                    lambda: motion_metric_single_element_motion_in_teacher(y_true, y_pred, threshold),
                    lambda: motion_metric_single_element_no_motion_in_teacher(y_true, y_pred, threshold))
-
-
-def motion_loss(y_true, y_pred, threshold=-0.3, batch_size=None):
-    """
-    Custom loss to evaluate if the network has corrected motion in the correct location of the frame
-    :param y_true: The teacher frame / ground truth
-    :param y_pred: The actual generated output by the network
-    :param threshold: Threshold value. Above this, a value is considered "active", otherwise "passive" or background
-    :return: 1.0 if motion correctly localized, 0.0 elsewise
-    """
-
-    # not set as default parameter value, because function head is evaluated too early
-    if batch_size is None:
-        batch_size = BATCH_SIZE
-
-    results = []
-    for i in range(batch_size):
-        r = motion_metric_single_element(y_true[i], y_pred[i], threshold)
-        results.append(r)
-
-    results = K.stack(results)
-    return K.mean(results)
