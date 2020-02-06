@@ -19,10 +19,10 @@
     ],
     "batch_size": 4,
     "epochs": 100,
-    "checkpoint_path": "../../checkpoints/cnn2d_100epochs_adam",
+    "checkpoint_path": "../../checkpoints/cnn2d_100epochs_adam_customloss",
     "model": "cnn2d",
     "kernel_base": 16,
     "num_features": 384,
     "dropout_rate": 0.5,
-    "optimizer": "sgd"
+    "optimizer": "adam"
 }
