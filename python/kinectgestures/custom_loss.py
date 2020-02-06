@@ -9,14 +9,14 @@ def is_motion_at_right_location(y_true, y_pred, threshold):
     y_true_flat = tf.reshape(y_true, [-1])
     y_pred_flat = tf.reshape(y_pred, [-1])
 
-    number_of_locations = 500
+    number_of_locations = 2000
     # where is the "active" actor located? in the network output?
     values, active_locations = tf.nn.top_k(y_pred_flat, number_of_locations)
 
     # is this also "active" in the teacher?
     actual_values = tf.gather(y_true_flat, active_locations)
     results = tf.map_fn(lambda x: tf.cast(tf.greater(x, tf.constant(threshold)), dtype=tf.float32), actual_values)
-    metric_mean = tf.reduce_mean(results)
+    metric_mean = -tf.reduce_mean(results)
 
     return metric_mean
 
@@ -45,7 +45,7 @@ def motion_metric_single_element_no_motion_in_teacher(y_true, y_pred, threshold)
     cond_no_motion_in_prediction = tf.equal(tf.count_nonzero(y_pred > threshold), 0)
 
     return tf.cond(tf.logical_and(cond_no_motion_in_teacher, cond_no_motion_in_prediction),
-                   lambda: 1.0,
+                   lambda: -1.0,
                    lambda: 0.0)
 
 
