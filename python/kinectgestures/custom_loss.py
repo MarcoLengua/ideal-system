@@ -49,7 +49,8 @@ def motion_metric_single_element_no_motion_in_teacher(y_true, y_pred, threshold)
                    lambda: 0.0)
 
 
-def motion_loss(y_true, y_pred, threshold=-0.3):
+def motion_loss(y_true, y_pred):
+    threshold = -0.3
     motion_in_teacher = contains_motion(y_true, threshold)
 
     return tf.cond(motion_in_teacher,
