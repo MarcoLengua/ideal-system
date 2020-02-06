@@ -18,6 +18,7 @@ from kinectgestures.visuals import plot_history
 from kinectgestures.util import checkpoint_dir_exists, dataset_dir_exists, make_or_get_checkpoint_dir, get_dataset_dir, \
     ask_yes_no_question
 from kinectgestures.metrics import motion_metric
+from kinectgestures.custom_loss import  motion_loss
 import kinectgestures.metrics as metrics
 
 
@@ -242,7 +243,7 @@ def trainfforvalidationandtest(config):
     ## Training setup
     metrics.BATCH_SIZE = config["batch_size"]
     #adam = keras.optimizers.Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, amsgrad=False)
-    model.compile(optimizer='adam', loss='mse', metrics=[motion_metric])
+    model.compile(optimizer='adam', loss=[motion_loss], metrics=[motion_metric])
 
     #####################
     # Callbacks
