@@ -58,7 +58,7 @@ def test_subset(config, model, should_store_output, filter_category=None, filter
                                   last_frame_only=is_2d_model,
                                   filter_category=filter_category,
                                   filter_count=filter_count,
-                                  skip_incomplete_batch=True  # FIXME: workaround bc the metric fails on smaller batches
+                                  skip_incomplete_batch=False  # FIXME: workaround bc the metric fails on smaller batches
                                   )
     dataset_test = default_evaluation_preprocessing(config, dataset_test)
     print("[BUSY] Running test set...")
@@ -68,6 +68,7 @@ def test_subset(config, model, should_store_output, filter_category=None, filter
         batch, teachers = dataset_test[i]
 
         loss, motion_metric_batch = model.test_on_batch(batch, teachers)
+        print(motion_metric_batch)
         motion_metric.append(motion_metric_batch)
 
         if should_store_output:
@@ -77,6 +78,8 @@ def test_subset(config, model, should_store_output, filter_category=None, filter
             save_network_output(config, i, out_path, result, teachers)
 
     print("[DONE] took {:.2f}s".format(time() - start_time))
+    print("motion metric as list before taking np.mean")
+    print(motion_metric)
     motion_metric = np.mean(motion_metric)
     print("Motion metric (mean): {}".format(motion_metric))
 
