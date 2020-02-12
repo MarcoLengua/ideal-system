@@ -20,7 +20,7 @@
     ],
     "batch_size": 4,
     "epochs": 100,
-    "checkpoint_path": "../../checkpoints/cnn3d_100epochs_lowerlearningrate_skipincompleteFalse",
+    "checkpoint_path": "../../checkpoints/cnn3d_100epochs_lowerlearningrate_skipincompleteFalse2",
     "model": "cnn3d",
     "kernel_base": 16,
     "num_features": 384,
