@@ -19,7 +19,7 @@
     ],
     "batch_size": 24,
     "epochs": 100,
-    "checkpoint_path": "../../checkpoints/vgg19_100epochs_lowerlearningrate_skipincompleteFalse2",
+    "checkpoint_path": "../../checkpoints/vgg19_100epochs_lowerlearningrate_skipincompleteFalse3",
     "model": "vgg19",
     "num_features": 80,
     "dropout_rate": 0.5,
