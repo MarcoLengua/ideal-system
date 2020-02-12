@@ -19,7 +19,7 @@
     ],
     "batch_size": 12,
     "epochs": 100,
-    "checkpoint_path": "../../checkpoints/inception_100epochs_lowerlearningrate_skipincompleteFalse4",
+    "checkpoint_path": "../../checkpoints/inception_100epochs_lowerlearningrate_skipincompleteFalse5",
     "model": "inception",
     "num_features": 70,
     "dropout_rate": 0.5,
